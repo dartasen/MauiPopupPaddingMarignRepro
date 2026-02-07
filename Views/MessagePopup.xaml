@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<toolkit:Popup x:Class="PopupRepro.Views.MessagePopup"
+               x:TypeArguments="x:Boolean"
+               x:DataType="vm:MessagePopupViewModel"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:vm="clr-namespace:PopupRepro.ViewModels"
+               xmlns:converters="clr-namespace:PopupRepro.Views.Converters"
+               CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <Grid RowSpacing="30">
+
+        <Grid.RowDefinitions>
+            <!-- Image -->
+            <RowDefinition Height="40" />
+            <!-- Message -->
+            <RowDefinition Height="*" />
+            <!-- Buttons -->
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Image -->
+        <Image Grid.Row="0"
+               Source="{Binding Icon, Mode=OneWay}"
+               IsVisible="{Binding Title, Mode=OneWay, Converter={converters:NullToBoolConverter}}"
+               HeightRequest="40"
+               WidthRequest="40"
+               VerticalOptions="Center"
+               HorizontalOptions="Center">
+            <Image.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="White" />
+            </Image.Behaviors>
+        </Image>
+
+        <!-- Message -->
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="10">
+
+            <Label FontFamily="OpenSansBold"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   Text="{Binding Title, Mode=OneWay}"
+                   IsVisible="{Binding Title, Mode=OneWay, Converter={converters:NullToBoolConverter}}"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center" />
+
+            <Label Text="{Binding Message, Mode=OneWay}"
+                   TextColor="White"
+                   FontSize="16"
+                   FontAttributes="None"
+                   IsVisible="{Binding Message, Mode=OneWay, Converter={converters:NullToBoolConverter}}"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+            
+        </VerticalStackLayout>
+
+        <!-- Buttons -->
+        <VerticalStackLayout Grid.Row="2"
+                             Spacing="10">
+            
+            <Button Text="{Binding AffirmativeLabel, Mode=OneWay}"
+                    Clicked="OnOKButtonClicked"
+                    Style="{StaticResource ButtonPrimary}" />
+
+            <Button Text="{Binding DestructiveLabel, Mode=OneWay}"
+                    Clicked="OnCancelButtonClicked"
+                    Style="{StaticResource ButtonPrimary}" />
+            
+        </VerticalStackLayout>
+
+    </Grid>
+</toolkit:Popup>
